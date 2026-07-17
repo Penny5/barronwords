@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Barron's 1100 — Mockup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F4F4F2;            /* page backdrop */
+    --surface:#FFFFFF;
+    --surface-2:#FAFAF9;
+    --border:#ECEBE8;
+    --border-2:#F0EFEC;
+    --text:#1A1A1A;
+    --text-2:#6B6B6B;
+    --text-3:#9C9B98;
+    --accent:#5B5BD6;        /* restrained indigo-violet */
+    --accent-soft:#EEEFFC;
+    --good:#2E9E6B;
+    --warn:#D98C3A;
+    --r-lg:18px;
+    --r-md:14px;
+    --r-sm:10px;
+    --serif:'Newsreader',Georgia,'Times New Roman',serif;
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+    --shadow:0 1px 2px rgba(20,20,20,.04), 0 6px 20px rgba(20,20,20,.05);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:var(--sans);
+    background:var(--bg);
+    color:var(--text);
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:18px;
+    padding:40px 16px 64px;
+  }
+
+  /* ---- top control bar ---- */
+  .ctrl{
+    display:flex;gap:6px;padding:5px;background:var(--surface);
+    border:1px solid var(--border);border-radius:999px;box-shadow:var(--shadow);
+  }
+  .ctrl button{
+    border:0;background:transparent;font-family:inherit;font-size:13px;font-weight:500;
+    color:var(--text-2);padding:8px 16px;border-radius:999px;cursor:pointer;transition:.18s;
+  }
+  .ctrl button.on{background:var(--text);color:#fff;}
+
+  /* ---- phone frame ---- */
+  .phone{
+    width:390px;height:800px;background:#000;border-radius:46px;padding:11px;
+    box-shadow:0 30px 70px rgba(20,20,20,.22), 0 2px 6px rgba(20,20,20,.12);
+    position:relative;
+  }
+  .screen{
+    width:100%;height:100%;border-radius:36px;overflow:hidden;background:var(--surface-2);
+    position:relative;display:flex;flex-direction:column;
+  }
+  .notch{
+    position:absolute;top:11px;left:50%;transform:translateX(-50%);
+    width:118px;height:30px;background:#000;border-radius:0 0 18px 18px;z-index:5;
+  }
+  .statusbar{
+    height:46px;flex:0 0 auto;display:flex;align-items:flex-end;justify-content:space-between;
+    padding:0 26px 6px;font-size:13px;font-weight:600;color:var(--text);
+  }
+  .statusbar .right{display:flex;gap:6px;align-items:center;opacity:.8}
+  .view{flex:1;display:flex;flex-direction:column;min-height:0}
+
+  /* ---- app header ---- */
+  .appbar{
+    padding:6px 18px 12px;display:flex;align-items:center;justify-content:space-between;flex:0 0 auto;
+  }
+  .appbar .ctx{font-size:11px;letter-spacing:.14em;color:var(--text-3);font-weight:600;text-transform:uppercase}
+  .appbar h1{margin:2px 0 0;font-family:var(--serif);font-size:20px;font-weight:500;letter-spacing:-.01em}
+  .iconbtn{
+    width:34px;height:34px;border-radius:50%;border:1px solid var(--border);background:var(--surface);
+    display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text-2);
+  }
+
+  /* ============ FLASHCARD VIEW ============ */
+  #view-card .card-wrap{
+    flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    padding:8px 22px 0;perspective:1600px;
+  }
+  .pos-row{
+    display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text-3);
+    margin-bottom:14px;font-weight:500;
+  }
+  .pill{background:var(--accent-soft);color:var(--accent);padding:3px 9px;border-radius:999px;font-size:11px;font-weight:600}
+  .flipcard{
+    width:100%;height:330px;position:relative;cursor:pointer;
+    transform-style:preserve-3d;transition:transform .6s cubic-bezier(.4,.2,.2,1);
+  }
+  .flipcard.flipped{transform:rotateY(180deg)}
+  .face{
+    position:absolute;inset:0;border-radius:var(--r-lg);backface-visibility:hidden;
+    -webkit-backface-visibility:hidden;background:var(--surface);border:1px solid var(--border);
+    box-shadow:var(--shadow);display:flex;flex-direction:column;
+  }
+  .face-back{transform:rotateY(180deg);padding:22px}
+  .front-inner{
+    flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:24px;
+  }
+  .word{
+    font-family:var(--serif);font-size:46px;font-weight:500;letter-spacing:-.02em;line-height:1;
+  }
+  .pron{font-family:var(--serif);font-style:italic;font-size:16px;color:var(--text-2);margin-top:8px}
+  .speaker{
+    margin-top:16px;width:40px;height:40px;border-radius:50%;background:var(--accent-soft);
+    color:var(--accent);border:0;display:flex;align-items:center;justify-content:center;cursor:pointer;
+  }
+  .tap-hint{font-size:11px;color:var(--text-3);margin-top:18px;letter-spacing:.04em}
+
+  .def-label{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-3);font-weight:600}
+  .def-text{font-size:17px;line-height:1.45;margin:6px 0 16px;font-weight:500}
+  .ex-box{
+    background:var(--surface-2);border:1px solid var(--border-2);border-radius:var(--r-md);
+    padding:12px 14px;margin-top:auto;
+  }
+  .ex-box .tag{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:700}
+  .ex-box .ex{font-family:var(--serif);font-size:14.5px;line-height:1.5;color:var(--text);margin-top:5px}
+  .ex-box .src{font-size:11px;color:var(--text-3);margin-top:6px}
+
+  /* progress + actions */
+  .card-foot{padding:18px 22px 26px;flex:0 0 auto}
+  .progress-row{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--text-3);margin-bottom:14px}
+  .progress-bar{flex:1;height:5px;background:var(--border);border-radius:999px;overflow:hidden}
+  .progress-bar i{display:block;height:100%;width:38%;background:var(--accent);border-radius:999px}
+  .actions{display:flex;gap:10px}
+  .btn{
+    flex:1;border:1px solid var(--border);background:var(--surface);font-family:inherit;font-size:14px;
+    font-weight:600;color:var(--text);padding:13px;border-radius:var(--r-md);cursor:pointer;transition:.15s;
+    display:flex;align-items:center;justify-content:center;gap:7px;
+  }
+  .btn:active{transform:scale(.98)}
+  .btn.unknown{color:var(--warn);border-color:#EAD9C9}
+  .btn.known{color:#fff;background:var(--text);border-color:var(--text)}
+
+  /* ============ LESSON VIEW ============ */
+  #view-lesson .tabs{
+    display:flex;gap:4px;padding:2px 14px;border-bottom:1px solid var(--border);flex:0 0 auto;
+  }
+  .tab{
+    border:0;background:transparent;font-family:inherit;font-size:13.5px;font-weight:500;color:var(--text-3);
+    padding:10px 12px;cursor:pointer;position:relative;
+  }
+  .tab.on{color:var(--text)}
+  .tab.on::after{content:"";position:absolute;left:12px;right:12px;bottom:-1px;height:2px;background:var(--text);border-radius:2px}
+  .scroll{flex:1;overflow:auto;padding:16px 16px 24px}
+  .tab-pane{display:none}.tab-pane.on{display:block}
+
+  .lead{
+    font-family:var(--serif);font-size:15.5px;line-height:1.65;color:var(--text);
+  }
+  .lead .w{
+    color:var(--accent);border-bottom:1.5px solid var(--accent-soft);cursor:pointer;
+  }
+  .reading-meta{font-size:12px;color:var(--text-3);margin-bottom:12px}
+
+  .word-row{
+    display:flex;align-items:center;gap:12px;padding:14px 14px;border:1px solid var(--border);
+    border-radius:var(--r-md);background:var(--surface);margin-bottom:9px;box-shadow:var(--shadow);cursor:pointer;
+  }
+  .word-row .num{font-size:12px;color:var(--text-3);width:18px;font-variant-numeric:tabular-nums}
+  .word-row .mid{flex:1;min-width:0}
+  .word-row .term{font-family:var(--serif);font-size:17px;font-weight:500;line-height:1.1}
+  .word-row .prow{font-size:12px;color:var(--text-3);margin-top:3px}
+  .word-row .prow .def{color:var(--text-2)}
+  .word-row .real{font-size:10px;background:var(--accent-soft);color:var(--accent);padding:2px 7px;border-radius:999px;font-weight:600}
+  .word-row .chk{color:var(--text-3)}
+
+  /* idiom */
+  .idiom-card{
+    border:1px solid var(--border);border-radius:var(--r-lg);background:var(--surface);padding:18px;box-shadow:var(--shadow);
+  }
+  .idiom-card .label{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-3);font-weight:700}
+  .idiom-card .phrase{font-family:var(--serif);font-size:20px;margin:6px 0 10px}
+  .idiom-card .meaning{font-size:14px;color:var(--text-2);line-height:1.5}
+  .idiom-card .ex{font-family:var(--serif);font-size:14px;color:var(--text);line-height:1.5;margin-top:12px;padding-top:12px;border-top:1px solid var(--border-2)}
+
+  .quiz-q{font-family:var(--serif);font-size:16px;margin-bottom:10px}
+  .blank{display:inline-block;min-width:80px;border-bottom:1.5px solid var(--text-3);margin:0 2px}
+  .bank{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}
+  .chip{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:7px 13px;font-size:13px;font-family:var(--serif);cursor:pointer}
+  .chip.used{opacity:.3;text-decoration:line-through}
+  .opt{display:flex;gap:10px;align-items:center;padding:11px 12px;border:1px solid var(--border);border-radius:var(--r-sm);margin-bottom:8px;font-size:14px;cursor:pointer}
+  .opt .k{width:22px;height:22px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--text-3);font-weight:600}
+  .opt.sel{border-color:var(--accent);background:var(--accent-soft)}
+  .opt.sel .k{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+  .legend{font-size:11px;color:var(--text-3);text-align:center;margin-top:2px}
+</style>
+</head>
+<body>
+
+  <div class="ctrl">
+    <button class="on" data-v="card">翻卡 Flashcard</button>
+    <button data-v="lesson">课程 Lesson</button>
+  </div>
+
+  <div class="phone">
+    <div class="notch"></div>
+    <div class="screen">
+      <div class="statusbar">
+        <span>9:41</span>
+        <span class="right">●●●● 􀙇 100%</span>
+      </div>
+
+      <!-- ============ FLASHCARD ============ -->
+      <div class="view" id="view-card">
+        <div class="appbar">
+          <div>
+            <div class="ctx">Week 1 · Day 1</div>
+            <h1>词卡背诵</h1>
+          </div>
+          <button class="iconbtn" title="close">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+          </button>
+        </div>
+
+        <div class="card-wrap">
+          <div class="pos-row">
+            <span class="pill">adj.</span>
+            <span>3 / 1100</span>
+          </div>
+
+          <div class="flipcard" id="card">
+            <!-- FRONT -->
+            <div class="face">
+              <div class="front-inner">
+                <div class="word">voracious</div>
+                <div class="pron">/vəˈreɪ·ʃəs/</div>
+                <button class="speaker" onclick="event.stopPropagation();">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></svg>
+                </button>
+                <div class="tap-hint">轻点翻面看释义</div>
+              </div>
+            </div>
+            <!-- BACK -->
+            <div class="face face-back">
+              <div class="def-label">Definition</div>
+              <div class="def-text">desiring or consuming great quantities</div>
+              <div class="ex-box">
+                <div class="tag">真实语料 · Panorama</div>
+                <div class="ex">"A <i>voracious</i> reader, he devoured three novels a week well into his nineties."</div>
+                <div class="src">— Obituary, <i>The New York Times</i></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-foot">
+          <div class="progress-row">
+            <span>进度</span>
+            <div class="progress-bar"><i></i></div>
+            <span>38%</span>
+          </div>
+          <div class="actions">
+            <button class="btn unknown">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+              不认识
+            </button>
+            <button class="btn known">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+              认识
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ LESSON ============ -->
+      <div class="view" id="view-lesson" style="display:none">
+        <div class="appbar">
+          <div>
+            <div class="ctx">Week 1 · Day 1</div>
+            <h1>Reading Wisely</h1>
+          </div>
+          <button class="iconbtn" title="audio">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></svg>
+          </button>
+        </div>
+
+        <div class="tabs">
+          <button class="tab on" data-t="words">词卡</button>
+          <button class="tab" data-t="reading">阅读</button>
+          <button class="tab" data-t="practice">练习</button>
+          <button class="tab" data-t="idiom">习语</button>
+        </div>
+
+        <div class="scroll">
+          <!-- WORDS -->
+          <div class="tab-pane on" data-pane="words">
+            <div class="word-row">
+              <span class="num">1</span>
+              <div class="mid">
+                <div class="term">voracious</div>
+                <div class="prow"><span>/vəˈreɪ·ʃəs/</span> · <span class="def">desiring or consuming great quantities</span></div>
+              </div>
+              <span class="real">真实语料</span>
+            </div>
+            <div class="word-row">
+              <span class="num">2</span>
+              <div class="mid">
+                <div class="term">indiscriminate</div>
+                <div class="prow"><span>/ˌɪndɪˈskrɪmɪnət/</span> · <span class="def">choosing at random without careful selection</span></div>
+              </div>
+              <span class="real">真实语料</span>
+            </div>
+            <div class="word-row">
+              <span class="num">3</span>
+              <div class="mid">
+                <div class="term">eminent</div>
+                <div class="prow"><span>/ˈemɪnənt/</span> · <span class="def">of high reputation, outstanding</span></div>
+              </div>
+            </div>
+            <div class="word-row">
+              <span class="num">4</span>
+              <div class="mid">
+                <div class="term">steeped</div>
+                <div class="prow"><span>/stiːpt/</span> · <span class="def">soaked, drenched, saturated</span></div>
+              </div>
+            </div>
+            <div class="word-row">
+              <span class="num">5</span>
+              <div class="mid">
+                <div class="term">replete</div>
+                <div class="prow"><span>/rɪˈpliːt/</span> · <span class="def">completely filled or supplied with</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- READING -->
+          <div class="tab-pane" data-pane="reading">
+            <div class="reading-meta">阅读段落 · 新词已标注,点击查看释义</div>
+            <p class="lead">The youngster who reads <span class="w">voraciously</span>, though <span class="w">indiscriminately</span>, does not necessarily gain in wisdom over the teenager who is more selective in his reading choices. A young man who has read the life story of every <span class="w">eminent</span> athlete of the twentieth century, or a coed who has <span class="w">steeped</span> herself in every social-protest novel she can get her hands on, may very well be learning all there is to know in a very limited area. But books are <span class="w">replete</span> with so many wonders that it is often discouraging to see bright young people limit their own experiences.</p>
+          </div>
+
+          <!-- PRACTICE -->
+          <div class="tab-pane" data-pane="practice">
+            <div class="quiz-q">1. The football game was <span class="blank"></span> with excitement and great plays.</div>
+            <div class="bank">
+              <span class="chip">voracious</span>
+              <span class="chip used">eminent</span>
+              <span class="chip">replete</span>
+              <span class="chip">steeped</span>
+              <span class="chip">indiscriminate</span>
+            </div>
+            <div style="height:14px"></div>
+            <div class="quiz-q">6. voracious</div>
+            <div class="opt"><span class="k">a</span> of high reputation, outstanding</div>
+            <div class="opt sel"><span class="k">b</span> desiring or consuming great quantities</div>
+            <div class="opt"><span class="k">c</span> soaked, drenched, saturated</div>
+            <div class="opt"><span class="k">d</span> choosing at random without careful selection</div>
+          </div>
+
+          <!-- IDIOM -->
+          <div class="tab-pane" data-pane="idiom">
+            <div class="idiom-card">
+              <div class="label">Today's Idiom</div>
+              <div class="phrase">to eat humble pie</div>
+              <div class="meaning">to admit your error and apologize</div>
+              <div class="ex">After his candidate had lost the election, the boastful campaign manager had to eat humble pie.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="legend">极简现代 · Inter + Newsreader · 靛蓝强调 · 在浏览器里点翻卡/切视图/切 tab 都可交互</div>
+
+<script>
+  // initial view via ?v=lesson
+  (function(){
+    const v=new URLSearchParams(location.search).get('v');
+    if(v==='lesson'){
+      document.querySelector('.ctrl button[data-v="lesson"]').classList.add('on');
+      document.querySelector('.ctrl button[data-v="card"]').classList.remove('on');
+      document.getElementById('view-card').style.display='none';
+      document.getElementById('view-lesson').style.display='flex';
+    }
+  })();
+  // view switch
+  const ctrl=document.querySelector('.ctrl');
+  ctrl.addEventListener('click',e=>{
+    const b=e.target.closest('button'); if(!b)return;
+    ctrl.querySelectorAll('button').forEach(x=>x.classList.remove('on')); b.classList.add('on');
+    const v=b.dataset.v;
+    document.getElementById('view-card').style.display=v==='card'?'flex':'none';
+    document.getElementById('view-lesson').style.display=v==='lesson'?'flex':'none';
+  });
+  // flip
+  const card=document.getElementById('card');
+  card.addEventListener('click',()=>card.classList.toggle('flipped'));
+  // tabs
+  const tabs=document.querySelectorAll('#view-lesson .tab');
+  tabs.forEach(t=>t.addEventListener('click',()=>{
+    tabs.forEach(x=>x.classList.remove('on')); t.classList.add('on');
+    document.querySelectorAll('#view-lesson .tab-pane').forEach(p=>p.classList.toggle('on',p.dataset.pane===t.dataset.t));
+  }));
+</script>
+</body>
+</html>

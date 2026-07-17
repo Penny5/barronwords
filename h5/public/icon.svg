@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Barron 1100">
+  <rect width="512" height="512" rx="112" fill="#0F2744"/>
+  <rect x="48" y="48" width="416" height="416" rx="88" fill="#162F52"/>
+  <text x="256" y="318" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="220" font-weight="700" fill="#D4AF37">B</text>
+</svg>

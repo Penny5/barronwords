@@ -1,0 +1,44 @@
+:root {
+  /* Scholar's Desk — editorial academic */
+  --ink: #0f2744;
+  --ink-soft: #1e3a5f;
+  --ink-muted: #5a6f85;
+  --paper: #f8f6f1;
+  --paper-deep: #f0ece3;
+  --surface: #ffffff;
+  --gold: #c9a227;
+  --gold-soft: #e8d598;
+  --accent: #2d6a9f;
+  --accent-soft: #d6e8f5;
+  --success: #2f855a;
+  --success-bg: #e6f4ec;
+  --danger: #c53030;
+  --danger-bg: #fdeaea;
+  --border: rgba(15, 39, 68, 0.1);
+  --shadow-sm: 0 1px 3px rgba(15, 39, 68, 0.06);
+  --shadow-md: 0 8px 24px rgba(15, 39, 68, 0.08);
+  --shadow-lg: 0 16px 40px rgba(15, 39, 68, 0.12);
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Source Sans 3', system-ui, sans-serif;
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-full: 999px;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+
+  --header-h: 56px;
+  --tabbar-h: 64px;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-top: env(safe-area-inset-top, 0px);
+
+  --transition: 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+}

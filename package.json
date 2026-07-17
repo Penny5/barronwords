@@ -1,0 +1,26 @@
+{
+  "name": "barronwords",
+  "version": "1.0.0",
+  "description": "Barron's 1100 Words - personal H5 vocabulary learning app",
+  "scripts": {
+    "parse": "node scripts/parse-epub.js",
+    "enrich": "node scripts/enrich-examples.js",
+    "enrich:passages": "node scripts/enrich-passages.js",
+    "enrich:definitions": "node scripts/enrich-definitions.js",
+    "fill:definitions": "node scripts/fill-definitions.js",
+    "fill:exercises": "node scripts/fill-exercises.js",
+    "fill:refs": "node scripts/fill-passage-refs.js",
+    "enrich:fast": "node scripts/enrich-examples.js --skip-translate",
+    "dev:h5": "npm run dev --prefix h5",
+    "build:h5": "npm run build --prefix h5",
+    "build:pages": "npm run test:data && npm run build:h5",
+    "preview:h5": "npm run preview --prefix h5",
+    "test": "node scripts/validate-data.js && npm run test --prefix h5",
+    "test:data": "node scripts/validate-data.js",
+    "test:h5": "npm run test --prefix h5"
+  },
+  "dependencies": {
+    "adm-zip": "^0.5.16",
+    "cheerio": "^1.0.0"
+  }
+}
